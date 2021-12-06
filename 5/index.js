@@ -39,11 +39,29 @@ const solve1 = (input, max_x, max_y) => {
   return map.flat().filter(x => x !== '.' && x > 1).length
 }
 
-const solve2 = (input) => {
-  return 2
+const solve2 = (input, max_x, max_y) => {
+  const map = Array.from({ length: max_x + 1 }, () => Array.from({ length: max_y + 1 }, () => 0))
+  input.forEach(([[x1, y1], [x2, y2]]) => {
+    if (Math.abs(x1 - x2) === Math.abs(y1 - y2)) {
+      let j = x1 < x2 ? y1 : y2
+      for (let i = Math.min(x1, x2); i <= Math.max(x1, x2); i++) {
+        map[j][i] = map[j][i] === 0 ? 1 : map[j][i] + 1
+        j += (j < (x1 < x2 ? y2 : y1) ? 1 : -1)
+      }
+    } else if (x1 === x2) {
+      for (let i = Math.min(y1, y2); i < Math.max(y1, y2) + 1; i++) {
+        map[i][x1] = map[i][x1] === 0 ? 1 : map[i][x1] + 1
+      }
+    } else if (y1 === y2) {
+      for (let i = Math.min(x1, x2); i < Math.max(x1, x2) + 1; i++) {
+        map[y1][i] = map[y1][i] === 0 ? 1 : map[y1][i] + 1
+      }
+    }
+  })
+  return map.flat().filter(x => x !== '.' && x > 1).length
 }
 
 readFile("input.txt").then(([input, max_x, max_y]) => {
   console.log(`solution to part 1: ${solve1(input, max_x, max_y)}`)
-  console.log(`solution to part 2: ${solve2(input)}`)
+  console.log(`solution to part 2: ${solve2(input, max_x, max_y)}`)
 })
