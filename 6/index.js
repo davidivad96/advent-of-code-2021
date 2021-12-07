@@ -42,7 +42,17 @@ const solve1 = (input) => {
 }
 
 const solve2 = (input) => {
-  return 2
+  const N = 256
+  const circular_buffer = Array.from({ length: 9 }, (_, i) => input.filter(val => val === i).length)
+  for (let i = 0; i < N; i++) {
+    const zeroes = circular_buffer[0]
+    for (let j = 1; j < circular_buffer.length; j++) {
+      circular_buffer[j - 1] = circular_buffer[j]
+    }
+    circular_buffer[circular_buffer.length - 1] = zeroes
+    circular_buffer[6] += zeroes
+  }
+  return circular_buffer.reduce((prev, curr) => prev + curr, 0)
 }
 
 readFile("input.txt").then(input => {
