@@ -72,9 +72,9 @@ const getScore = (chunk) => {
 };
 
 const solve2 = (input) => {
-  const incomplete_chunks = input.filter((chunk) => checkSyntax(chunk) === 0)
-  const scores = incomplete_chunks.map((chunk) => getScore(chunk))
-  return scores.sort((a, b) => b - a)[Math.floor(scores.length / 2)]
+  const incomplete_chunks = input.filter((chunk) => checkSyntax(chunk) === 0);
+  const scores = incomplete_chunks.map((chunk) => getScore(chunk));
+  return scores.sort((a, b) => b - a)[Math.floor(scores.length / 2)];
 };
 
 readFile("input.txt").then((input) => {
