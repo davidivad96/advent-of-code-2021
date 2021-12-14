@@ -20,6 +20,13 @@ const readFile = async (path) => {
   return [polymer, rules];
 };
 
+const getMostAndLeastCommonCharacterCount = (characters_count) => {
+  const sorted_count = Object.values(characters_count).sort((a, b) => a - b);
+  const least_common_character_count = sorted_count[0];
+  const most_common_character_count = sorted_count[sorted_count.length - 1];
+  return [most_common_character_count, least_common_character_count];
+};
+
 const solve1 = (polymer, rules) => {
   const N_STEPS = 10;
   let polymer_copy = polymer.slice();
@@ -41,9 +48,8 @@ const solve1 = (polymer, rules) => {
       ? characters_count[character] + 1
       : 1;
   }
-  const sorted_count = Object.values(characters_count).sort((a, b) => a - b);
-  const least_common_character_count = sorted_count[0];
-  const most_common_character_count = sorted_count[sorted_count.length - 1];
+  const [most_common_character_count, least_common_character_count] =
+    getMostAndLeastCommonCharacterCount(characters_count);
   return most_common_character_count - least_common_character_count;
 };
 
@@ -79,9 +85,8 @@ const solve2 = (polymer, rules) => {
     }
     pairs_count = { ...new_pairs_count };
   }
-  const sorted_count = Object.values(characters_count).sort((a, b) => a - b);
-  const least_common_character_count = sorted_count[0];
-  const most_common_character_count = sorted_count[sorted_count.length - 1];
+  const [most_common_character_count, least_common_character_count] =
+    getMostAndLeastCommonCharacterCount(characters_count);
   return most_common_character_count - least_common_character_count;
 };
 
